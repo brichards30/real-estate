@@ -17,7 +17,8 @@ const Banner = ({purpose, title1, title2, desc1, desc2, buttonText, linkName, im
         </Box>
     </Flex>
 )
-export default function Home() {
+export default function Home({ propertiesForSale, propertiesForRent }) {
+    console.log(propertiesForRent, propertiesForSale);
     return (
         <Box>
             <h1>
@@ -35,7 +36,7 @@ export default function Home() {
             />
 
             <Flex flexWrap="wrap">
-            {/*    Fetch properties and map over them */}
+            {propertiesForRent.map((property) => <Property property={property} key={property.id}/>)}
             </Flex>
             <Banner
                 purpose="BUY A HOME"
@@ -48,8 +49,20 @@ export default function Home() {
                 imageUrl='https://bayut-production.s3.eu-central-1.amazonaws.com/image/110993385/6a070e8e1bae4f7d8c1429bc303d2008'
             />
             <Flex>
-            {/*    Fetch properties and map over them*/}
+            {propertiesForSale.map((property) => <Property property={property} key={property.id}/>)}
             </Flex>
         </Box>
     )
+}
+
+export async function getStaticProps() {
+    const propertyForSale = await fetchApi(`${baseUrl}/properties/list?locationExternalIDs=5002&purpose=for-sale&hitsPerPage=6`)
+    const propertyForRent = await fetchApi(`${baseUrl}/properties/list?locationExternalIDs=5002&purpose=for-rent&hitsPerPage=6`)
+
+    return {
+        props: {
+            propertiesForSale: propertyForSale?.hits,
+            propertiesForRent: propertyForSale?.hits,
+        }
+    }
 }

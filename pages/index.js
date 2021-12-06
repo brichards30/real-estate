@@ -21,9 +21,6 @@ const Banner = ({purpose, title1, title2, desc1, desc2, buttonText, linkName, im
 export default function Home({ propertiesForSale, propertiesForRent }) {
     return (
         <Box>
-            <h1>
-                Hello World
-            </h1>
             <Banner
                 purpose="RENT A HOME"
                 title1="Rental Home for"
@@ -62,7 +59,7 @@ export async function getStaticProps() {
     return {
         props: {
             propertiesForSale: propertyForSale?.hits,
-            propertiesForRent: propertyForSale?.hits,
+            propertiesForRent: propertyForRent?.hits,
         }
     }
 }

@@ -19,7 +19,7 @@ const Search = ({ properties }) => {
                 bg="gray.100"
                 borderBottom="1px"
                 borderColor="gray.200"
-                p="5"
+                p="2"
                 fontWeight="black"
                 fontSize="lg"
                 justifyContent="center"
@@ -34,7 +34,7 @@ const Search = ({ properties }) => {
                 Properties {router.query.purpose}
             </Text>
             <Flex flexWrap="wrap">
-                {[].map((property) => <Property property={property} key={property.id}/>)}
+                {properties.map((property) => <Property property={property} key={property.id}/>)}
             </Flex>
             {properties.length === 0 && (
                 <Flex justifyContent="center" alignItems="center" flexDirection="column" marginTop="5" marginBottom="5">
@@ -48,10 +48,10 @@ const Search = ({ properties }) => {
 
 export default Search
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ query }) { //changes data when user changes filter
 
     const purpose = query.purpose || 'for-rent';
-    const rentFrequency = query.rentFrequency || 'yearly';
+    const rentFrequency = query.rentFrequency|| 'yearly';
     const minPrice = query.minPrice || '0';
     const maxPrice = query.maxPrice || '1000000';
     const roomsMin = query.roomsMin || '0';
